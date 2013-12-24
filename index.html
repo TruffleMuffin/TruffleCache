@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Trufflecache by TruffleMuffin</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Trufflecache</h1>
+        <p>A Cache library written to extend and make MemcachedSharp easier to use.</p>
+
+        <p class="view"><a href="https://github.com/TruffleMuffin/TruffleCache">View the Project on GitHub <small>TruffleMuffin/TruffleCache</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/TruffleMuffin/TruffleCache/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/TruffleMuffin/TruffleCache/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/TruffleMuffin/TruffleCache">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a name="trufflecache" class="anchor" href="#trufflecache"><span class="octicon octicon-link"></span></a>TruffleCache</h1>
+
+<p>A Cache library written to extend and make MemcachedSharp easier to use.</p>
+
+<h2>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>I have provided some example usages, one for non-async access and one for async access.</p>
+
+<h3>
+<a name="non-async" class="anchor" href="#non-async"><span class="octicon octicon-link"></span></a>Non-Async</h3>
+
+<div class="highlight highlight-c#"><pre><span class="k">private</span> <span class="n">Cache</span><span class="p">&lt;</span><span class="n">YourClass</span><span class="p">&gt;</span> <span class="n">cache</span><span class="p">;</span>
+
+<span class="p">......</span>
+
+<span class="kt">var</span> <span class="n">result</span> <span class="p">=</span> <span class="n">target</span><span class="p">.</span><span class="n">Get</span><span class="p">(</span><span class="s">"myKey"</span><span class="p">);</span>
+<span class="kt">var</span> <span class="n">result</span> <span class="p">=</span> <span class="n">target</span><span class="p">.</span><span class="n">Get</span><span class="p">(</span><span class="k">new</span> <span class="p">[]</span> <span class="p">{</span> <span class="s">"myKey1"</span><span class="p">,</span> <span class="s">"myKey2"</span> <span class="p">});</span>
+
+<span class="n">target</span><span class="p">.</span><span class="n">Set</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">item</span><span class="p">);</span>
+
+<span class="kt">var</span> <span class="n">removed</span> <span class="p">=</span> <span class="n">target</span><span class="p">.</span><span class="n">Remove</span><span class="p">(</span><span class="n">key</span><span class="p">);</span>
+</pre></div>
+
+<h3>
+<a name="async" class="anchor" href="#async"><span class="octicon octicon-link"></span></a>Async</h3>
+
+<div class="highlight highlight-c#"><pre><span class="k">private</span> <span class="n">Cache</span><span class="p">&lt;</span><span class="n">YourClass</span><span class="p">&gt;</span> <span class="n">cache</span><span class="p">;</span>
+
+<span class="p">......</span>
+
+<span class="kt">var</span> <span class="n">result</span> <span class="p">=</span> <span class="k">await</span> <span class="n">target</span><span class="p">.</span><span class="n">GetAsync</span><span class="p">(</span><span class="s">"myKey"</span><span class="p">);</span>
+<span class="kt">var</span> <span class="n">result</span> <span class="p">=</span> <span class="k">await</span> <span class="n">target</span><span class="p">.</span><span class="n">GetAsync</span><span class="p">(</span><span class="k">new</span> <span class="p">[]</span> <span class="p">{</span> <span class="s">"myKey1"</span><span class="p">,</span> <span class="s">"myKey2"</span> <span class="p">});</span>
+
+<span class="k">await</span> <span class="n">target</span><span class="p">.</span><span class="n">SetAsync</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">item</span><span class="p">);</span>
+
+<span class="kt">var</span> <span class="n">removed</span> <span class="p">=</span> <span class="k">await</span> <span class="n">target</span><span class="p">.</span><span class="n">RemoveAsync</span><span class="p">(</span><span class="n">key</span><span class="p">);</span>
+</pre></div>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/TruffleMuffin">TruffleMuffin</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
