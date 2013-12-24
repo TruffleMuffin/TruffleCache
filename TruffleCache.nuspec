@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package>
+  <metadata>
+    <id>TruffleCache</id>
+    <version>1.0.1</version>
+    <authors>TruffleMuffin</authors>
+    <owners>TruffleMuffin</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A Cache library written to extend and make MemcachedSharp easier to use.</description>
+    <copyright>Copyright 2014</copyright>
+    <projectUrl>https://github.com/TruffleMuffin/TruffleCache</projectUrl>
+    <dependencies>
+      <dependency id="MemcachedSharp" version="1.0.0" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="Build\TruffleCache.dll" target="lib\net45" />
+  </files>
+</package>

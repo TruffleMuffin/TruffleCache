@@ -1,0 +1,79 @@
+<Project DefaultTargets="build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	
+	<Import Project="$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets"/>
+	
+	<ItemGroup>
+		<Solution Include="$(SourceFolder)\TruffleCache.sln" />		
+	</ItemGroup>
+		
+	<ItemGroup>			
+		<TestAssemblies Include="$(BuildFolder)\TruffleCache.Tests.dll" />	
+	</ItemGroup>
+	
+	<PropertyGroup>
+		<BuildFolder>$(SourceFolder)\Build</BuildFolder>		
+		<ReportsFolder>$(SourceFolder)\Build\Reports</ReportsFolder>
+		<GallioEcho>C:\program files\gallio\bin\gallio.echo.exe</GallioEcho>
+		<NugetTool>C:\Program Files\NuGet\NuGet.exe</NugetTool>
+		<NugetPackages>C:\Production\Packages\Feed</NugetPackages>
+	</PropertyGroup>
+	
+	<Target Name="clean">
+		<CreateItem Include="$(BuildFolder)\**\*.*">
+			<Output TaskParameter="Include" ItemName="OldBuildFiles"/>
+		</CreateItem>
+		<Delete Files="@(OldBuildFiles)" />
+		<RemoveDir Directories="$(BuildFolder)" />
+		<MSBuild Projects="@(Solution)" Targets="clean" />
+	</Target>
+	
+	<Target Name="create-build" DependsOnTargets="clean">
+		<AssemblyInfo CodeLanguage="CS"
+                OutputFile="$(SourceFolder)\TruffleCache\Properties\AssemblyInfo.gen.cs"
+                AssemblyVersion="$(BUILD_NUMBER)"
+                AssemblyFileVersion="$(BUILD_NUMBER)"
+				AssemblyCompany="TruffleMuffin"
+				AssemblyCopyright="Copyright (c) TruffleMuffin, 2014"
+				AssemblyTitle="TruffleCache"
+				AssemblyDescription="A Cache library written to extend and make MemcachedSharp easier to use."
+		/>
+	</Target>
+	
+	<Target Name="release-build" DependsOnTargets="create-build">
+		<MSBuild Projects="@(Solution)" Properties="OutputPath=$(BuildFolder);Configuration=Release" StopOnFirstFailure="true" />
+	</Target>
+	
+	<Target Name="create-reports-folder">
+		<Exec Command="rmdir /s /q $(ReportsFolder)" />
+		<Exec Command="mkdir $(ReportsFolder)" />
+	</Target>
+	
+	<!-- Target for producing reports for test coverage -->
+	<Target Name="coverage" DependsOnTargets="create-reports-folder">
+		<!-- Run tests with NCover -->
+		<Exec Command="&quot;$(GallioEcho)&quot; @(TestAssemblies, ' ') /runner:IsolatedProcess /runner-property:NCoverCoverageFile='$(ReportsFolder)\CoverageOutput.xml' /report-directory:$(ReportsFolder) /report-type:Html-Condensed /report-name-format:UnitTests /no-echo-results" IgnoreExitCode="true" />
+	</Target>
+	
+	<Target Name="version-nuget-spec">
+		<ItemGroup>
+			<NugetSpec Include="$(SourceFolder)\*.nuspec" />
+		</ItemGroup>
+		<XmlUpdate XmlFileName="%(NugetSpec.Identity)" Xpath="//package/metadata/version" Value="$(BUILD_NUMBER)" />
+	</Target>
+	
+	<Target Name="compile-nuget">
+		<ItemGroup>
+			<NugetSpecVersioned Include="$(SourceFolder)\*.nuspec" />
+		</ItemGroup>
+		<Exec Command='"$(NugetTool)" pack "%(NugetSpecVersioned.Identity)" -verbosity normal' />
+	</Target>
+			
+	<Target Name="nuget" DependsOnTargets="version-nuget-spec;compile-nuget">
+		<ItemGroup>
+			<NugetPackage Include="$(SourceFolder)\*.nupkg" />
+		</ItemGroup>
+		<Exec Command='xcopy "%(NugetPackage.Identity)" "$(NugetPackages)" /Y' />
+		<Exec Command='del "%(NugetPackage.Identity)"' />
+	</Target>
+	
+</Project>
