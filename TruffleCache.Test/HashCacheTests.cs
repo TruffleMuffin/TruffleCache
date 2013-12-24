@@ -175,6 +175,7 @@ namespace TruffleCache.Test
                 var item = new POCOObject { Id = Guid.NewGuid() };
                 items.Add(item);
                 await target.SetAsync(keyPrefix + item.Id.ToString(), item);
+                Assert.AreEqual(item, await target.GetAsync(keyPrefix + item.Id.ToString()));
             }
 
             var keys = items.Select(a => keyPrefix + a.Id.ToString()).ToArray();
@@ -186,8 +187,10 @@ namespace TruffleCache.Test
             var endAt = DateTime.Now;
 
             Assert.Count(items.Count, result);
-            Assert.ForAll(result, a => items.FirstOrDefault(b => b.Id == a.Value.Id) != null);
             Assert.AreApproximatelyEqual(endAt - startAt, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1));
+
+            Assert.ForAll(result, a => a.Value != null);
+            Assert.ForAll(result, a => items.FirstOrDefault(b => b.Id == a.Value.Id) != null);
         }
     }
 }

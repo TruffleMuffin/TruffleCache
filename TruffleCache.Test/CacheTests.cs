@@ -137,7 +137,7 @@ namespace TruffleCache.Test
             var cacheItem = await target.GetAsync(key);
             Assert.IsNull(cacheItem);
         }
-        
+
         [AsyncTest]
         async Task Scenario_Multiple_Simple()
         {
@@ -174,6 +174,7 @@ namespace TruffleCache.Test
                 var item = new POCOObject { Id = Guid.NewGuid() };
                 items.Add(item);
                 await target.SetAsync(item.Id.ToString(), item);
+                Assert.AreEqual(item, await target.GetAsync(item.Id.ToString()));
             }
 
             var keys = items.Select(a => a.Id.ToString()).ToArray();
@@ -185,8 +186,10 @@ namespace TruffleCache.Test
             var endAt = DateTime.Now;
 
             Assert.Count(items.Count, result);
-            Assert.ForAll(result, a => items.FirstOrDefault(b => b.Id == a.Value.Id) != null);
             Assert.AreApproximatelyEqual(endAt - startAt, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1));
+
+            Assert.ForAll(result, a => a.Value != null);
+            Assert.ForAll(result, a => items.FirstOrDefault(b => b.Id == a.Value.Id) != null);
         }
     }
 }
