@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cache", "Cache\Cache\Cache.csproj", "{6C1F8169-1CA6-4058-A807-3AE7A4C13F6B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TruffleCache", "TruffleCache\TruffleCache.csproj", "{6C1F8169-1CA6-4058-A807-3AE7A4C13F6B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cache.Test", "Cache.Test\Cache.Test.csproj", "{5BFCFB16-57E1-4F3D-8DB9-6BEAD0BB838C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TruffleCache.Test", "TruffleCache.Test\TruffleCache.Test.csproj", "{5BFCFB16-57E1-4F3D-8DB9-6BEAD0BB838C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

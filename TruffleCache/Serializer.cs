@@ -3,7 +3,7 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading.Tasks;
 
-namespace Cache
+namespace TruffleCache
 {
     /// <summary>
     /// Implements a Serialisation system for arbitary objects

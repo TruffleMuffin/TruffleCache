@@ -5,25 +5,24 @@ using System.Threading;
 using System.Threading.Tasks;
 using MbUnit.Framework;
 
-namespace Cache.Test
+namespace TruffleCache.Test
 {
     [TestFixture]
-    class HashCacheTests
+    class CacheTests
     {
-        private HashCache<POCOObject> target;
-        private const string keyPrefix = "F4F02D91-9E73-46D9-BD36-573088B52443-F4F02D91-9E73-46D9-BD36-573088B52443-F4F02D91-9E73-46D9-BD36-573088B52443-F4F02D91-9E73-46D9-BD36-573088B52443-F4F02D91-9E73-46D9-BD36-573088B52443-F4F02D91-9E73-46D9-BD36-573088B52443-F4F02D91-9E73-46D9-BD36-573088B52443-F4F02D91-9E73-46D9-BD36-573088B52443-F4F02D91-9E73-46D9-BD36-573088B52443-F4F02D91-9E73-46D9-BD36-573088B52443-F4F02D91-9E73-46D9-BD36-573088B52443-F4F02D91-9E73-46D9-BD36-573088B52443-F4F02D91-9E73-46D9-BD36-573088B52443F4F02D91-9E73-46D9-BD36-573088B52443";
+        private Cache<POCOObject> target;
 
         [FixtureSetUp]
         void SetUp()
         {
-            target = new HashCache<POCOObject>(Guid.NewGuid().ToString());
+            target = new Cache<POCOObject>(Guid.NewGuid().ToString());
         }
 
         [Test]
         void Scenario_NonAsync_Simple()
         {
             var item = new POCOObject { Id = Guid.NewGuid() };
-            var key = keyPrefix + Guid.NewGuid().ToString();
+            var key = Guid.NewGuid().ToString();
 
             var cacheItem = target.Get(key);
 
@@ -49,9 +48,9 @@ namespace Cache.Test
             var item1 = new POCOObject { Id = Guid.NewGuid() };
             var item2 = new POCOObject { Id = Guid.NewGuid() };
 
-            var key1 = keyPrefix + Guid.NewGuid().ToString();
-            var key2 = keyPrefix + Guid.NewGuid().ToString();
-            var key3 = keyPrefix + Guid.NewGuid().ToString();
+            var key1 = Guid.NewGuid().ToString();
+            var key2 = Guid.NewGuid().ToString();
+            var key3 = Guid.NewGuid().ToString();
 
             var keys = new[] { key1, key2, key3 };
 
@@ -73,7 +72,7 @@ namespace Cache.Test
         async Task Scenario_Simple()
         {
             var item = new POCOObject { Id = Guid.NewGuid() };
-            var key = keyPrefix + Guid.NewGuid().ToString();
+            var key = Guid.NewGuid().ToString();
 
             var cacheItem = await target.GetAsync(key);
 
@@ -103,7 +102,7 @@ namespace Cache.Test
                     Items = new List<AnotherPOCOObject> { new AnotherPOCOObject { Id = Guid.NewGuid() } },
                     Name = "Hello"
                 };
-            var key = keyPrefix + Guid.NewGuid().ToString();
+            var key = Guid.NewGuid().ToString();
 
             var cacheItem = await target.GetAsync(key);
 
@@ -122,7 +121,7 @@ namespace Cache.Test
         [AsyncTest]
         async Task Scenario_NotCached()
         {
-            var cacheItem = await target.GetAsync(keyPrefix + Guid.NewGuid().ToString());
+            var cacheItem = await target.GetAsync(Guid.NewGuid().ToString());
             Assert.IsNull(cacheItem);
         }
 
@@ -130,7 +129,7 @@ namespace Cache.Test
         async Task Scenario_Cached_TimeElapsed_NotCached()
         {
             var item = new POCOObject { Id = Guid.NewGuid() };
-            var key = keyPrefix + Guid.NewGuid().ToString();
+            var key = Guid.NewGuid().ToString();
             await target.SetAsync(key, item, TimeSpan.FromSeconds(1));
 
             Thread.Sleep(TimeSpan.FromSeconds(2));
@@ -138,16 +137,16 @@ namespace Cache.Test
             var cacheItem = await target.GetAsync(key);
             Assert.IsNull(cacheItem);
         }
-
+        
         [AsyncTest]
         async Task Scenario_Multiple_Simple()
         {
             var item1 = new POCOObject { Id = Guid.NewGuid() };
             var item2 = new POCOObject { Id = Guid.NewGuid() };
 
-            var key1 = keyPrefix + Guid.NewGuid().ToString();
-            var key2 = keyPrefix + Guid.NewGuid().ToString();
-            var key3 = keyPrefix + Guid.NewGuid().ToString();
+            var key1 = Guid.NewGuid().ToString();
+            var key2 = Guid.NewGuid().ToString();
+            var key3 = Guid.NewGuid().ToString();
 
             var keys = new[] { key1, key2, key3 };
 
@@ -174,10 +173,10 @@ namespace Cache.Test
             {
                 var item = new POCOObject { Id = Guid.NewGuid() };
                 items.Add(item);
-                await target.SetAsync(keyPrefix + item.Id.ToString(), item);
+                await target.SetAsync(item.Id.ToString(), item);
             }
 
-            var keys = items.Select(a => keyPrefix + a.Id.ToString()).ToArray();
+            var keys = items.Select(a => a.Id.ToString()).ToArray();
 
             var startAt = DateTime.Now;
 

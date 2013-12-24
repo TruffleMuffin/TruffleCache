@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Cache.Test
+namespace TruffleCache.Test
 {
     [Serializable]
     public class POCOObject

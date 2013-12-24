@@ -1,11 +1,11 @@
-﻿using MemcachedSharp;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
+using MemcachedSharp;
 
-namespace Cache
+namespace TruffleCache
 {
     /// <summary>
     /// An implementation of the <see cref="ICacheStore" /> using the <see cref="MemcachedClient" />.

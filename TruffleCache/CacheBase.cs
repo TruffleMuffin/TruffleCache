@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Cache
+namespace TruffleCache
 {
     /// <summary>
     /// A base cache for storing a single type

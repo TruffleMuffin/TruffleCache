@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Cache.Test
+namespace TruffleCache.Test
 {
     [Serializable]
     public class AnotherPOCOObject

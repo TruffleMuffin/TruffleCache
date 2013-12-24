@@ -1,4 +1,4 @@
-﻿namespace Cache
+﻿namespace TruffleCache
 {
     /// <summary>
     /// A default implementation of the CacheBase class, which allows the key prefix to be provided on construction.

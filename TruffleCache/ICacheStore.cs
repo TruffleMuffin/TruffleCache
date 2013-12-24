@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Cache
+namespace TruffleCache
 {
     /// <summary>
     /// Describes a Cache Store

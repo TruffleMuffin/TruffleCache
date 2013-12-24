@@ -1,7 +1,7 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 
-namespace Cache
+namespace TruffleCache
 {
     /// <summary>
     /// An implementation of the Cache which will Hash Keys before adding them to the <see cref="ICacheStore" />
