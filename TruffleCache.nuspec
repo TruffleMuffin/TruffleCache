@@ -16,5 +16,6 @@
   </metadata>
   <files>
     <file src="Build\TruffleCache.dll" target="lib\net45" />
+    <file src="Build\TruffleCache.XML" target="lib\net45" />
   </files>
 </package>
