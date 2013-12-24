@@ -10,6 +10,7 @@
     <description>A Cache library written to extend and make MemcachedSharp easier to use.</description>
     <copyright>Copyright 2014</copyright>
     <projectUrl>https://github.com/TruffleMuffin/TruffleCache</projectUrl>
+    <tags>Cache Memcached Async MemcachedSharp</tags>
     <dependencies>
       <dependency id="MemcachedSharp" version="1.0.0" />
     </dependencies>
