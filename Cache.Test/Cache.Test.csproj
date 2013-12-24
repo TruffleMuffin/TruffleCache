@@ -58,7 +58,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnotherPOCOObject.cs" />
     <Compile Include="CacheTests.cs" />
+    <Compile Include="HashCacheTests.cs" />
+    <Compile Include="POCOObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

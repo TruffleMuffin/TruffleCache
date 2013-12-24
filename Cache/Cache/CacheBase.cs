@@ -53,9 +53,9 @@ namespace Cache
         /// <returns>
         /// True if the item was cached, false otherwise.
         /// </returns>
-        public virtual async void Set(string key, T value, TimeSpan expiresIn)
+        public virtual void Set(string key, T value, TimeSpan expiresIn)
         {
-            await Task.Run(() => SetAsync(key, value, expiresIn));
+            Task.Run(() => SetAsync(key, value, expiresIn)).Wait();
         }
 
         /// <summary>
@@ -148,7 +148,7 @@ namespace Cache
         /// </returns>
         public virtual IDictionary<string, T> Get(params string[] keys)
         {
-            return Task.Run(() => GetAsync(keys)).Result;
+            return Task.Run(() => GetAsync(keys.ToArray())).Result;
         }
 
         /// <summary>
@@ -161,7 +161,8 @@ namespace Cache
         /// </returns>
         public virtual async Task<IDictionary<string, T>> GetAsync(params string[] keys)
         {
-            return (await cache.GetAsync(keys.Select(GetKey).ToArray())).ToDictionary(x => ShortenKey(x.Key), x => (T)x.Value);
+            var keyLookup = keys.ToDictionary(GetKey, a => a);
+            return (await cache.GetAsync(keyLookup.Keys.ToArray())).ToDictionary(x => ShortenKey(keyLookup[x.Key]), x => (T)x.Value);
         }
 
         /// <summary>

@@ -66,13 +66,11 @@ namespace Cache
         /// </returns>
         public async Task<IDictionary<string, object>> GetAsync(params string[] keys)
         {
-            var tasks = keys
-                .AsParallel()
-                .Select(a => client.Value.Get(PrefixKey(a)))
-                .ToArray();
-            var results = await Task.WhenAll(tasks);
+            var taskLookup = keys.AsParallel().ToDictionary(a => a, a => client.Value.Get(PrefixKey(a)));
 
-            return results.ToDictionary(a => DePrefixKey(a.Key), a => Serializer.Deserialize(a.Data));
+            await Task.WhenAll(taskLookup.Values);
+
+            return taskLookup.ToDictionary(a => a.Key, a => a.Value.Result == null ? null : Serializer.Deserialize(a.Value.Result.Data));
         }
 
         /// <summary>
