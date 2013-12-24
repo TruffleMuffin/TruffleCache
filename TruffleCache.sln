@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TruffleCache", "TruffleCache\TruffleCache.csproj", "{6C1F8169-1CA6-4058-A807-3AE7A4C13F6B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TruffleCache.Test", "TruffleCache.Test\TruffleCache.Test.csproj", "{5BFCFB16-57E1-4F3D-8DB9-6BEAD0BB838C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6C1F8169-1CA6-4058-A807-3AE7A4C13F6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C1F8169-1CA6-4058-A807-3AE7A4C13F6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C1F8169-1CA6-4058-A807-3AE7A4C13F6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C1F8169-1CA6-4058-A807-3AE7A4C13F6B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5BFCFB16-57E1-4F3D-8DB9-6BEAD0BB838C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BFCFB16-57E1-4F3D-8DB9-6BEAD0BB838C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BFCFB16-57E1-4F3D-8DB9-6BEAD0BB838C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BFCFB16-57E1-4F3D-8DB9-6BEAD0BB838C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
