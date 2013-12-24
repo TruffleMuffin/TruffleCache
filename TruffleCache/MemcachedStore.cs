@@ -10,7 +10,7 @@ namespace TruffleCache
     /// <summary>
     /// An implementation of the <see cref="ICacheStore" /> using the <see cref="MemcachedClient" />.
     /// </summary>
-    public class MemcachedStore : ICacheStore
+    public sealed class MemcachedStore : ICacheStore
     {
         private readonly Lazy<MemcachedClient> client;
         private readonly string prefix;
@@ -120,15 +120,6 @@ namespace TruffleCache
         private string PrefixKey(string key)
         {
             return string.Concat(prefix, key);
-        }
-
-        /// <summary>
-        /// Des the prefix key.
-        /// </summary>
-        /// <param name="key">The key.</param>
-        private string DePrefixKey(string key)
-        {
-            return key.Replace(prefix, string.Empty);
         }
     }
 }

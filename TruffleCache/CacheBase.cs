@@ -176,6 +176,8 @@ namespace TruffleCache
         /// </returns>
         protected virtual string GetKey(string key)
         {
+            if (key == null) throw new ArgumentException("A key must be specified");
+
             //replace any spaces (not supported in cache keys)
             //return the key with the cache prefix, all lower case
             //this makes cache keys non-case sensitive
