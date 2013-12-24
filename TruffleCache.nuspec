@@ -2,7 +2,8 @@
 <package>
   <metadata>
     <id>TruffleCache</id>
-    <version>1.0.1</version>
+    <title>TruffleCache</title>
+    <version>1.0.0</version>
     <authors>TruffleMuffin</authors>
     <owners>TruffleMuffin</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
