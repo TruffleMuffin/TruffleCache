@@ -34,6 +34,8 @@
                 AssemblyFileVersion="$(BUILD_NUMBER)"
 				AssemblyCompany="TruffleMuffin"
 				AssemblyCopyright="Copyright (c) TruffleMuffin, 2014"
+				AssemblyTitle="TruffleCache"
+				AssemblyDescription="A Cache library written to extend and make MemcachedSharp easier to use."
 		/>
 	</Target>
 	
