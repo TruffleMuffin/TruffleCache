@@ -1,12 +1,15 @@
-﻿namespace TruffleCache
+﻿using System;
+
+namespace TruffleCache
 {
     /// <summary>
-    /// A default implementation of the CacheBase class, which allows the key prefix to be provided on construction.
+    /// A default implementation. This should suffice for most requirements.
     /// </summary>
     /// <typeparam name="T">The type of item stored in cache.</typeparam>
-    public class Cache<T> : CacheBase<T> where T : class
+    /// <remarks>It is highly recommended that you construct with a keyPrefix to avoid Key collisions.</remarks>
+    public sealed class Cache<T> : CacheBase<T> where T : class
     {
-        private readonly string keyPrefix;
+        private readonly string cachePrefix;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Cache{T}" /> class.
@@ -19,29 +22,29 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="Cache{T}" /> class.
         /// </summary>
-        /// <param name="keyPrefix">The key prefix.</param>
-        public Cache(string keyPrefix)
+        /// <param name="cachePrefix">The key prefix.</param>
+        public Cache(string cachePrefix)
         {
-            this.keyPrefix = keyPrefix;
+            this.cachePrefix = cachePrefix;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Cache{T}" /> class.
         /// </summary>
         /// <param name="store">The store.</param>
-        /// <param name="keyPrefix">The key prefix.</param>
-        public Cache(ICacheStore store, string keyPrefix)
+        /// <param name="cachePrefix">The key prefix.</param>
+        public Cache(ICacheStore store, string cachePrefix)
             : base(store)
         {
-            this.keyPrefix = keyPrefix;
+            this.cachePrefix = cachePrefix;
         }
 
         /// <summary>
-        /// Gets the key prefix for items in this cache.
+        /// Gets the function to apply to Keys in this instance.
         /// </summary>
-        protected override string KeyPrefix
+        protected override Func<string, string> ProcessKey
         {
-            get { return keyPrefix; }
+            get { return a => string.Concat(cachePrefix, "$", CleanKey(a).ToLower()); }
         }
     }
 }
