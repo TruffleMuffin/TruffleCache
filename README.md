@@ -8,7 +8,7 @@ Installation
 
 TruffleCache is fairly easy to install, grab the NuGet Package - TruffleCache - and add that to your project/solution. Once that is done you can use it out of the box, however this will only work against a MemcacheD server running on 127.0.0.1 on port 11211. 
 
-To specify a custom server configuration I would recommend using an Container like Castle.Windsor. Register a custom construction of the MemcacheStore with the MemcachedClient provided. Details about the MemcachedClient configuration can be found on the [MemcachedSharp GitHub Page](https://github.com/bcuff/MemcachedSharp).
+To specify a custom server configuration I would recommend using an Container like Castle.Windsor. Register a custom construction of the MemcacheStore with the MemcachedClient provided. Details about the MemcachedClient configuration can be found on the [MemcachedSharp GitHub Page](https://github.com/bcuff/MemcachedSharp). An example of this method is available in the TruffleCache.Example project.
 
 Configuration Options
 -----
