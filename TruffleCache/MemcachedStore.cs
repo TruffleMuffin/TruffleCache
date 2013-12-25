@@ -28,7 +28,7 @@ namespace TruffleCache
                 MaxConnections = 2,
                 MaxConcurrentRequestPerConnection = 15
             }));
-            this.prefix = ConfigurationManager.AppSettings["Application.CachePrefix"] ?? "_";
+            this.prefix = ConfigurationManager.AppSettings["TruffleCache.CachePrefix"] ?? "_";
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace TruffleCache
         public MemcachedStore(MemcachedClient client)
         {
             this.client = new Lazy<MemcachedClient>(() => client);
-            this.prefix = ConfigurationManager.AppSettings["Application.CachePrefix"] ?? "_";
+            this.prefix = ConfigurationManager.AppSettings["TruffleCache.CachePrefix"] ?? "_";
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace TruffleCache
         {
             var result = await client.Value.Get(PrefixKey(key));
 
-            if (result == null) return (T)(object)null;
+            if (result == null) return default(T);
 
             return (T)await Serializer.DeserializeAsync(result.Data);
         }

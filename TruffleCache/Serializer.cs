@@ -10,6 +10,8 @@ namespace TruffleCache
     /// </summary>
     internal static class Serializer
     {
+        private static readonly BinaryFormatter binaryFormatter = new BinaryFormatter();
+
         /// <summary>
         /// Asynchronously serializes the provided object.
         /// </summary>
@@ -21,9 +23,8 @@ namespace TruffleCache
                 {
                     using (var ms = new MemoryStream())
                     {
-                        new BinaryFormatter().Serialize(ms, value);
-
-                        return new ArraySegment<byte>(ms.GetBuffer(), 0, (int)ms.Length).Array;
+                        binaryFormatter.Serialize(ms, value);
+                        return ms.ToArray();
                     }
                 });
         }
@@ -35,7 +36,7 @@ namespace TruffleCache
         /// <returns>The object</returns>
         public static Task<object> DeserializeAsync(Stream value)
         {
-            return Task.Run(() => new BinaryFormatter().Deserialize(value));
+            return Task.Run(() => binaryFormatter.Deserialize(value));
         }
 
         /// <summary>
@@ -56,6 +57,16 @@ namespace TruffleCache
         public static object Deserialize(Stream value)
         {
             return Task.Run(() => DeserializeAsync(value)).Result;
+        }
+
+        /// <summary>
+        /// Validates the specified object is serializable.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns>True if serializable, otherwise False.</returns>
+        public static bool Validate(object value)
+        {
+            return value.GetType().IsSerializable;
         }
     }
 }

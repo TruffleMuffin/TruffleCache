@@ -1,78 +1,67 @@
-﻿using System.Security.Cryptography;
+﻿using System;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace TruffleCache
 {
     /// <summary>
-    /// An implementation of the Cache which will Hash Keys before adding them to the <see cref="ICacheStore" />
+    /// A special implementation. This should be used when you have long keys that exceed the limits of the <see cref="ICacheStore"/>. If you are 
+    /// using MemcacheD then this limit is approximately 250 bytes. This cache will MD5 Hash Keys before attempting to use them to ensure they are smaller
+    /// than the limit.
     /// </summary>
     /// <typeparam name="T">The type of item stored in cache.</typeparam>
-    public class HashCache<T> : Cache<T> where T : class
+    /// <remarks>This cache has a performance impact due to the MD5 Hash that applies to the Key on all methods.</remarks>
+    public sealed class HashCache<T> : CacheBase<T> where T : class
     {
+        private readonly string cachePrefix;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="HashCache{T}" /> class.
         /// </summary>
         public HashCache()
-            : base(string.Empty)
+            : this(string.Empty)
         {
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HashCache{T}" /> class.
         /// </summary>
-        /// <param name="keyPrefix">The key prefix.</param>
-        public HashCache(string keyPrefix)
-            : base(keyPrefix)
+        /// <param name="cachePrefix">The key prefix.</param>
+        public HashCache(string cachePrefix)
         {
+            this.cachePrefix = cachePrefix;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HashCache{T}" /> class.
         /// </summary>
         /// <param name="store">The store.</param>
-        /// <param name="keyPrefix">The key prefix.</param>
-        public HashCache(ICacheStore store, string keyPrefix)
-            : base(store, keyPrefix)
+        /// <param name="cachePrefix">The key prefix.</param>
+        public HashCache(ICacheStore store, string cachePrefix)
+            : base(store)
         {
+            this.cachePrefix = cachePrefix;
         }
 
         /// <summary>
-        /// Gets the key.
+        /// Gets the function to apply to Keys in this instance.
         /// </summary>
-        /// <param name="key">The key.</param>
-        /// <returns></returns>
-        protected override string GetKey(string key)
+        protected override Func<string, string> ProcessKey
         {
-            return base.GetKey(GetCacheKey(key));
+            get { return a => string.Concat(cachePrefix, "$", GetHashedKey(a).ToLower()); }
         }
 
         /// <summary>
-        /// Gets the cache key.
+        /// Gets the MD5 Hashed version of the specified Key
         /// </summary>
         /// <param name="key">The key.</param>
-        /// <returns></returns>
-        private static string GetCacheKey(string key)
+        /// <returns>A string</returns>
+        private static string GetHashedKey(string key)
         {
-            // Memcache cannot have keys longer than 250 bytes in length, this includes Key Prefixes
-            // Use input string to calculate MD5 hash
             // Convert the byte array to hexadecimal string
-            var hashBytes = MD5Hash(key);
             var sb = new StringBuilder();
-            for (var i = 0; i < hashBytes.Length; i++)
-            {
-                sb.Append(hashBytes[i].ToString("X2"));
-            }
+            Array.ForEach(MD5.Create().ComputeHash(Encoding.ASCII.GetBytes(key)), a => sb.Append(a.ToString("X2")));
             return sb.ToString();
-        }
-
-        /// <summary>
-        /// MD5 Hashes the value
-        /// </summary>
-        /// <param name="key">The key.</param>
-        /// <returns></returns>
-        private static byte[] MD5Hash(string key)
-        {
-            return MD5.Create().ComputeHash(Encoding.ASCII.GetBytes(key));
         }
     }
 }
