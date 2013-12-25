@@ -85,7 +85,7 @@ namespace TruffleCache
         {
             var result = await client.Value.Get(PrefixKey(key));
 
-            if (result == null) return (T)(object)null;
+            if (result == null) return default(T);
 
             return (T)await Serializer.DeserializeAsync(result.Data);
         }

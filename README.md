@@ -56,7 +56,15 @@ var removed = await target.RemoveAsync(key);
 Special Caches
 -----
 
-There is currently one specialist Cache available with this library. That is the HashCache. It works the same way as the Cache class, however it will MD5 Hash all provided Keys before trying to use them with the ICacheStore implementation provided. This Cache allows you to use keys longer than 250 bytes - the Memcached limit for a key length.
+There is currently a few specialist Caches available with this library. 
+
+### HashCache ###
+
+It works the same way as the Cache class, however it will MD5 Hash all provided Keys before trying to use them with the ICacheStore implementation provided. This Cache allows you to use keys longer than 250 bytes - the Memcached limit for a key length.
+
+### ValueCache ###
+
+It works the same way as the Cache class, however it supports only Value types.
 
 Limitations
 -----

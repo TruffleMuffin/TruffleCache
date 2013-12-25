@@ -14,8 +14,8 @@ namespace TruffleCache
     /// <remarks>Default Expiry of cache items is 24 hours. If you wish to extend this set an AppSetting for "TruffleCache.ExpiryInHours".</remarks>
     public abstract class CacheBase<T>
     {
-        private readonly ICacheStore cache;
-        private readonly TimeSpan defaultExpiry;
+        protected readonly ICacheStore cache;
+        protected readonly TimeSpan defaultExpiry;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CacheBase{T}" /> class.

@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace TruffleCache
 {
@@ -37,6 +40,19 @@ namespace TruffleCache
             : base(store)
         {
             this.cachePrefix = cachePrefix;
+        }
+
+        /// <summary>
+        /// Gets multiple items from the cache.
+        /// </summary>
+        /// <param name="keys">The keys of the items to retrieve from cache.</param>
+        /// <returns>
+        /// A dictionary of the items from the cache, with the cache key being used as the dictionary key
+        /// </returns>
+        public override async Task<IDictionary<string, T>> GetAsync(params string[] keys)
+        {
+            var keyLookup = keys.ToDictionary(ProcessKey, a => a);
+            return (await cache.GetAsync(keyLookup.Keys.ToArray())).ToDictionary(x => keyLookup[x.Key], x => x.Value == null ? default(T) : (T)x.Value);
         }
 
         /// <summary>
