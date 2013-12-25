@@ -31,9 +31,24 @@
         <h1>
 <a name="trufflecache" class="anchor" href="#trufflecache"><span class="octicon octicon-link"></span></a>TruffleCache</h1>
 
-<p>A Cache library written to extend and make MemcachedSharp easier to use.</p>
+<p>A Cache library written to extend and make <a href="https://github.com/bcuff/MemcachedSharp">MemcachedSharp</a> easier to use.</p>
 
 <h2>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<p>TruffleCache is fairly easy to install, grab the NuGet Package - TruffleCache - and add that to your project/solution. Once that is done you can use it out of the box, however this will only work against a MemcacheD server running on 127.0.0.1 on port 11211. </p>
+
+<p>To specify a custom server configuration I would recommend using an Container like Castle.Windsor. Register a custom construction of the MemcacheStore with the MemcachedClient provided. Details about the MemcachedClient configuration can be found on the <a href="https://github.com/bcuff/MemcachedSharp">MemcachedSharp GitHub Page</a>. An example of this method is available in the TruffleCache.Example project.</p>
+
+<h2>
+<a name="configuration-options" class="anchor" href="#configuration-options"><span class="octicon octicon-link"></span></a>Configuration Options</h2>
+
+<p>There are two configuration options available for TruffleCache. They are both specified by AppSettings. They are as follows</p>
+
+<ul>
+<li>TruffleCache.CachePrefix - Prefix all Keys used by this application with this specified key</li>
+<li>TruffleCache.ExpiryInHours - Default Expiry for all cache items.</li>
+</ul><h2>
 <a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
 
 <p>I have provided some example usages, one for non-async access and one for async access.</p>
@@ -67,6 +82,36 @@
 
 <span class="kt">var</span> <span class="n">removed</span> <span class="p">=</span> <span class="k">await</span> <span class="n">target</span><span class="p">.</span><span class="n">RemoveAsync</span><span class="p">(</span><span class="n">key</span><span class="p">);</span>
 </pre></div>
+
+<h2>
+<a name="special-caches" class="anchor" href="#special-caches"><span class="octicon octicon-link"></span></a>Special Caches</h2>
+
+<p>There is currently a few specialist Caches available with this library. </p>
+
+<h3>
+<a name="hashcache" class="anchor" href="#hashcache"><span class="octicon octicon-link"></span></a>HashCache</h3>
+
+<p>It works the same way as the Cache class, however it will MD5 Hash all provided Keys before trying to use them with the ICacheStore implementation provided. This Cache allows you to use keys longer than 250 bytes - the Memcached limit for a key length.</p>
+
+<h3>
+<a name="valuecache" class="anchor" href="#valuecache"><span class="octicon octicon-link"></span></a>ValueCache</h3>
+
+<p>It works the same way as the Cache class, however it supports only Value types.</p>
+
+<h2>
+<a name="limitations" class="anchor" href="#limitations"><span class="octicon octicon-link"></span></a>Limitations</h2>
+
+<p>There is currently a limitation with Multi Get, this is not implemented natively by <a href="https://github.com/bcuff/MemcachedSharp">MemcachedSharp GitHub Page</a> so I have used a Parallel request system to imitate that functionality.</p>
+
+<h2>
+<a name="need-something-custom" class="anchor" href="#need-something-custom"><span class="octicon octicon-link"></span></a>Need Something Custom?</h2>
+
+<p>You can open an Issue here and I will try and implement it, or you can extend CacheBase and implement it yourself. </p>
+
+<h2>
+<a name="testing" class="anchor" href="#testing"><span class="octicon octicon-link"></span></a>Testing</h2>
+
+<p>A set of Unit/Integration tests are provided with this code base. If you want to test Caches implemented by this library in your own code, currently methods are marked virtual so you should be able to set up Expectation on them with most frameworks.  </p>
       </section>
       <footer>
         <p>This project is maintained by <a href="https://github.com/TruffleMuffin">TruffleMuffin</a></p>
