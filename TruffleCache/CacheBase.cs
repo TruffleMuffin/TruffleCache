@@ -38,6 +38,11 @@ namespace TruffleCache
                 customExpiry = 24;
             }
             this.defaultExpiry = TimeSpan.FromHours(customExpiry);
+
+            if (Serializer.Validate(Activator.CreateInstance<T>()) == false)
+            {
+                throw new ArgumentException(string.Format("The type {0} is not Serializable", typeof(T).FullName));
+            }
         }
 
         /// <summary>

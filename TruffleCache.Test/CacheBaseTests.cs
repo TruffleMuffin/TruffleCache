@@ -27,6 +27,13 @@ namespace TruffleCache.Test
         }
 
         [Test]
+        [ExpectedArgumentException]
+        void Construct_NotSerializableObject_Exception()
+        {
+            new Cache<NotSerializableObject>();
+        }
+
+        [Test]
         void Set_DefaultExpiry_24Hours()
         {
             var item = new POCOObject();
@@ -104,6 +111,11 @@ namespace TruffleCache.Test
             {
                 await target.SetAsync(key, item);
             }
+        }
+        
+        class NotSerializableObject
+        {
+             
         }
     }
 }

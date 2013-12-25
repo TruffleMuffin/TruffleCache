@@ -57,5 +57,15 @@ namespace TruffleCache
         {
             return Task.Run(() => DeserializeAsync(value)).Result;
         }
+
+        /// <summary>
+        /// Validates the specified object is serializable.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns>True if serializable, otherwise False.</returns>
+        public static bool Validate(object value)
+        {
+            return value.GetType().IsSerializable;
+        }
     }
 }
