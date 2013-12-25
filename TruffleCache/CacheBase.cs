@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,6 +13,7 @@ namespace TruffleCache
     public abstract class CacheBase<T>
     {
         private readonly ICacheStore cache;
+        private readonly TimeSpan defaultExpiry;
         private string short_key;
 
         /// <summary>
@@ -29,6 +31,13 @@ namespace TruffleCache
         protected CacheBase(ICacheStore cache)
         {
             this.cache = cache;
+
+            int customExpiry;
+            if (int.TryParse(ConfigurationManager.AppSettings["TruffleCache.ExpiryInHours"], out customExpiry) == false)
+            {
+                customExpiry = 24;
+            }
+            this.defaultExpiry = TimeSpan.FromHours(customExpiry);
         }
 
         /// <summary>
@@ -82,7 +91,7 @@ namespace TruffleCache
         /// </returns>
         public virtual void Set(string key, T value)
         {
-            Set(key, value, TimeSpan.FromDays(7));
+            Set(key, value, defaultExpiry);
         }
 
         /// <summary>
@@ -95,7 +104,7 @@ namespace TruffleCache
         /// </returns>
         public virtual Task SetAsync(string key, T value)
         {
-            return SetAsync(key, value, TimeSpan.FromDays(7));
+            return SetAsync(key, value, defaultExpiry);
         }
 
         /// <summary>
