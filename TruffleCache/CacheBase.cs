@@ -162,7 +162,7 @@ namespace TruffleCache
         public virtual async Task<IDictionary<string, T>> GetAsync(params string[] keys)
         {
             var keyLookup = keys.ToDictionary(ProcessKey, a => a);
-            return (await cache.GetAsync(keyLookup.Keys.ToArray())).ToDictionary(x => keyLookup[x.Key], x => (T)x.Value);
+            return (await cache.GetAsync<T>(keyLookup.Keys.ToArray())).ToDictionary(x => keyLookup[x.Key], x => x.Value);
         }
 
         /// <summary>

@@ -28,7 +28,7 @@ namespace TruffleCache
         /// A dictionary of the items from the cache, with the key being
         /// used as the dictionary key
         /// </returns>
-        Task<IDictionary<string, object>> GetAsync(params string[] keys);
+        Task<IDictionary<string, T>> GetAsync<T>(params string[] keys);
         
         /// <summary>
         /// Gets the specified item from the cache.

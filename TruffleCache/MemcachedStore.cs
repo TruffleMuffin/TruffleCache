@@ -64,13 +64,13 @@ namespace TruffleCache
         /// A dictionary of the items from the cache, with the key being
         /// used as the dictionary key
         /// </returns>
-        public async Task<IDictionary<string, object>> GetAsync(params string[] keys)
+        public async Task<IDictionary<string, T>> GetAsync<T>(params string[] keys)
         {
             var taskLookup = keys.AsParallel().ToDictionary(a => a, a => client.Value.Get(PrefixKey(a)));
 
             await Task.WhenAll(taskLookup.Values);
 
-            return taskLookup.ToDictionary(a => a.Key, a => a.Value.Result == null ? null : Serializer.Deserialize(a.Value.Result.Data));
+            return taskLookup.ToDictionary(a => a.Key, a => a.Value.Result == null ? default(T) : Serializer.Deserialize<T>(a.Value.Result.Data));
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace TruffleCache
 
             if (result == null) return default(T);
 
-            return (T)await Serializer.DeserializeAsync(result.Data);
+            return await Serializer.DeserializeAsync<T>(result.Data);
         }
 
         /// <summary>
