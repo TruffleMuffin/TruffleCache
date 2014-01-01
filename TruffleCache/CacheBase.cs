@@ -69,16 +69,6 @@ namespace TruffleCache
         }
 
         /// <summary>
-        /// Add/Replaces an item in the cache with the default expiry
-        /// </summary>
-        /// <param name="key">The unique key for the item.</param>
-        /// <param name="value">The instance of the object to add to the cache.</param>
-        public virtual Task SetAsync(string key, T value)
-        {
-            return SetAsync(key, value, defaultExpiry);
-        }
-
-        /// <summary>
         /// Add/Replaces an item in the cache
         /// </summary>
         /// <param name="key">The unique key for the item.</param>
@@ -87,6 +77,16 @@ namespace TruffleCache
         public virtual void Set(string key, T value, TimeSpan expiresIn)
         {
             Task.Run(() => SetAsync(key, value, expiresIn)).Wait();
+        }
+
+        /// <summary>
+        /// Add/Replaces an item in the cache with the default expiry
+        /// </summary>
+        /// <param name="key">The unique key for the item.</param>
+        /// <param name="value">The instance of the object to add to the cache.</param>
+        public virtual Task SetAsync(string key, T value)
+        {
+            return SetAsync(key, value, defaultExpiry);
         }
 
         /// <summary>

@@ -15,9 +15,6 @@ namespace TruffleCache
         /// <param name="key">The unqiue key to use for the item in the cache.</param>
         /// <param name="value">The value to add in the cache.</param>
         /// <param name="expiresIn">The timespan after which the item is expired from the cache.</param>
-        /// <returns>
-        /// True if the item was sucessfully added to the cache, false otherwise
-        /// </returns>
         Task SetAsync(string key, object value, TimeSpan expiresIn);
         
         /// <summary>
@@ -25,8 +22,7 @@ namespace TruffleCache
         /// </summary>
         /// <param name="keys">The keys of the items to return.</param>
         /// <returns>
-        /// A dictionary of the items from the cache, with the key being
-        /// used as the dictionary key
+        /// A dictionary of the items from the cache, with the key being used as the dictionary key
         /// </returns>
         Task<IDictionary<string, T>> GetAsync<T>(params string[] keys);
         

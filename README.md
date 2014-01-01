@@ -16,7 +16,7 @@ Configuration Options
 There are two configuration options available for TruffleCache. They are both specified by AppSettings. They are as follows
 
 * TruffleCache.CachePrefix - Prefix all Keys used by this application with this specified key
-* TruffleCache.ExpiryInHours - Default Expiry for all cache items.
+* TruffleCache.ExpiryInHours - Default Expiry for all cache items. Set to 0 if you want no expiry.
 
 Usage
 -----
@@ -65,6 +65,10 @@ It works the same way as the Cache class, however it will MD5 Hash all provided 
 ### ValueCache ###
 
 It works the same way as the Cache class, however it supports only Value types.
+
+### CasCache ###
+
+It works the same way as the Cache class, however it extends Set and Get support to include CheckAndSet.
 
 Limitations
 -----

@@ -5,7 +5,7 @@ using System.Text;
 namespace TruffleCache
 {
     /// <summary>
-    /// A special implementation. This should be used when you have long keys that exceed the limits of the <see cref="ICacheStore"/>. If you are 
+    /// A special implementation of <see cref="CacheBase{T}"/>. This should be used when you have long keys that exceed the limits of the <see cref="ICacheStore"/>. If you are 
     /// using MemcacheD then this limit is approximately 250 bytes. This cache will MD5 Hash Keys before attempting to use them to ensure they are smaller
     /// than the limit.
     /// </summary>

@@ -3,7 +3,7 @@
 namespace TruffleCache
 {
     /// <summary>
-    /// A value type implementation. This specialist cache is for use with value types.
+    /// A value type implementation of <see cref="CacheBase{T}"/>. This specialist cache is for use with value types.
     /// </summary>
     /// <typeparam name="T">The type of item stored in cache.</typeparam>
     /// <remarks>It is highly recommended that you construct with a keyPrefix to avoid Key collisions.</remarks>
