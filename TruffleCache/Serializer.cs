@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading.Tasks;
 
@@ -34,9 +33,9 @@ namespace TruffleCache
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>The object</returns>
-        public static Task<object> DeserializeAsync(Stream value)
+        public static Task<T> DeserializeAsync<T>(Stream value)
         {
-            return Task.Run(() => binaryFormatter.Deserialize(value));
+            return Task.Run(() => (T)binaryFormatter.Deserialize(value));
         }
 
         /// <summary>
@@ -54,9 +53,9 @@ namespace TruffleCache
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>The object</returns>
-        public static object Deserialize(Stream value)
+        public static T Deserialize<T>(Stream value)
         {
-            return Task.Run(() => DeserializeAsync(value)).Result;
+            return Task.Run(() => DeserializeAsync<T>(value)).Result;
         }
 
         /// <summary>

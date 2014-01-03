@@ -3,7 +3,7 @@
 namespace TruffleCache
 {
     /// <summary>
-    /// A default implementation. This should suffice for most requirements.
+    /// A default implementation of <see cref="CacheBase{T}"/>. This should suffice for most requirements.
     /// </summary>
     /// <typeparam name="T">The type of item stored in cache.</typeparam>
     /// <remarks>It is highly recommended that you construct with a keyPrefix to avoid Key collisions.</remarks>
