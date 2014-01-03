@@ -36,7 +36,7 @@ namespace TruffleCache.Test
             Assert.AreNotEqual(0, cacheItem.CheckValue);
             checkValue = cacheItem.CheckValue;
 
-            var setResult = target.Set(key, checkValue, item);
+            var setResult = target.Set(key, 1, item);
             Assert.IsFalse(setResult);
 
             setResult = target.Set(key, checkValue, item);

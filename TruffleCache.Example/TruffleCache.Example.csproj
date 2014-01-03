@@ -40,9 +40,9 @@
     <Reference Include="Castle.Windsor">
       <HintPath>..\packages\Castle.Windsor.3.2.1\lib\net45\Castle.Windsor.dll</HintPath>
     </Reference>
-    <Reference Include="MemcachedSharp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=8da2af81ba496336, processorArchitecture=MSIL">
+    <Reference Include="MemcachedSharp, Version=1.1.0.0, Culture=neutral, PublicKeyToken=8da2af81ba496336, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\MemcachedSharp.1.0.0\lib\net45\MemcachedSharp.dll</HintPath>
+      <HintPath>..\packages\MemcachedSharp.1.1.0\lib\net45\MemcachedSharp.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CompilerServices.AsyncTargetingPack.Net45">
       <HintPath>..\packages\Microsoft.CompilerServices.AsyncTargetingPack.1.0.1\lib\net45\Microsoft.CompilerServices.AsyncTargetingPack.Net45.dll</HintPath>
